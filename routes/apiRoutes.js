@@ -47,29 +47,31 @@ module.exports = function(app) {
 				if (err) throw err;
 
 				//Send all notes to client
-        res.json(req.body);
+        res.json(db);
         console.log("New note saved!");
 			});
 		});
 	});
 
 	//API DELETE request
-	app.delete('/api/notes/:id', (req, res) => {
+	app.delete("/api/notes/:id", (req, res) => {
 		//Read json data file
-		fs.readFile('../db/db.json', 'utf-8', (err, data) => {
+    fs.readFile("./db/db.json", 'utf-8', (err, data) => {
 			if (err) throw err;
 
 			//Parse json data
 			const notes = JSON.parse(data);
 
+      console.log(req.params.id);
+
 			//Remove the note with given id
-			notes.filter((note) => {
-				return note.id !== req.param.id;
-			});
+			notes = notes.filter(note => note.id !== req.params.id);
 
 			//Write the updated notes to db.json
-			fs.writeFile('../db/db.json', JSON.stringify(notes, null, '\t'), (err) => {
-				if (err) throw err;
+			fs.writeFile("./db/db.json", JSON.stringify(notes, null, '\t'), (err) => {
+        if (err) throw err;
+        res.json(db)
+        console.log("Selected note deleted");
 			});
 		});
 	});
