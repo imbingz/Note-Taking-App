@@ -37,7 +37,10 @@ module.exports = function(app) {
       if (err) throw err;
     
       const notes = JSON.parse(data)
-      
+
+      //Add id prop to each new note saved
+      req.body["id"] = notes.length + 1
+
       //Add new note to parsed data
       notes.push(req.body)
 
@@ -45,14 +48,15 @@ module.exports = function(app) {
       fs.writeFile('../db/db.json', JSON.stringify(notes, null, '\t'), err => {
         if (err) throw err;
       })
-
+      
+      //Send data to client
       res.json(notes)
   })
 
   //API DELETE request 
   
     app.delete('/api/notes/:id', (req, res) => {
-    
+      
   })
 
 }
