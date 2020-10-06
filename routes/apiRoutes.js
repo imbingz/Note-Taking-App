@@ -30,4 +30,29 @@ module.exports = function(app) {
     })
   })
 
+  //API POST request 
+  app.post('/api/notes', (req, res) => {
+    //Read json data file 
+    fs.readFile('../db/db.json', "utf-8", (err, data) => {
+      if (err) throw err;
+    
+      const notes = JSON.parse(data)
+      
+      //Add new note to parsed data
+      notes.push(req.body)
+
+      //Write the updated notes to db.json
+      fs.writeFile('../db/db.json', JSON.stringify(notes, null, '\t'), err => {
+        if (err) throw err;
+      })
+
+      res.json(notes)
+  })
+
+  //API DELETE request 
+  
+    app.delete('/api/notes/:id', (req, res) => {
+    
+  })
+
 }
