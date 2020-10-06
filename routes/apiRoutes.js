@@ -14,8 +14,6 @@ DELETE /api/notes/:id - Should receive a query parameter containing the id of a 
 
 const fs = require('fs');
 
-const db = require('../db/db.json')
-
 //SET UP API ROUTES AND EXPORT THE MODULE ================================================================================
 
 module.exports = function(app) {
@@ -36,27 +34,44 @@ module.exports = function(app) {
     fs.readFile('../db/db.json', "utf-8", (err, data) => {
       if (err) throw err;
     
-      const notes = JSON.parse(data)
+      const notes = JSON.parse(data);
 
       //Add id prop to each new note saved
-      req.body["id"] = notes.length + 1
+      req.body["id"] = notes.length + 1;
 
       //Add new note to parsed data
-      notes.push(req.body)
+      notes.push(req.body);
 
       //Write the updated notes to db.json
       fs.writeFile('../db/db.json', JSON.stringify(notes, null, '\t'), err => {
         if (err) throw err;
       })
-      
-      //Send data to client
-      res.json(notes)
-  })
 
+      //Send new note to client
+      res.json(req.body);
+    });
+  })
+    
   //API DELETE request 
-  
-    app.delete('/api/notes/:id', (req, res) => {
+  app.delete('/api/notes/:id', (req, res) => {
       
+    //Read json data file 
+    fs.readFile('../db/db.json', "utf-8", (err, data) => {
+      if (err) throw err;
+      
+      //Parse json data
+      const notes = JSON.parse(data);
+
+      //Remove the note with given id 
+      notes.filter(note => {
+        return note.id !== req.param.id
+      })
+ 
+      //Write the updated notes to db.json
+      fs.writeFile('../db/db.json', JSON.stringify(notes, null, '\t'), err => {
+        if (err) throw err;
+      })
+    })
   })
 
 }
