@@ -21,24 +21,23 @@ module.exports = function(app) {
 
 	//API GET request
   app.get('/api/notes', function(req, res) {
-    const notes = JSON.parse(db)
-    res.json(notes)
+    res.json(db)
   })
 
 	//API POST request
   app.post("/api/notes", (req, res) => {
-    const notes = JSON.parse(db)
+    
     //Set the newNote obj from user input
     const newNote = {
       title: req.body.title,
       text: req.body.text,
-      id: (data.length + 1).toString()
+      id: (db.length + 1).toString()
     }
     //add new note to notes data
-    notes.push(newNote);
+    db.push(newNote);
   
     //Write the updated notes to db.json
-    fs.writeFileSync("./db/db.json", JSON.stringify(notes, null, '\t')); 
+    fs.writeFileSync("./db/db.json", JSON.stringify(db, null, '\t')); 
 
     //Return newNote to user
     res.json(newNote)
@@ -46,10 +45,9 @@ module.exports = function(app) {
 			
 	//API DELETE request
 	app.delete('/api/notes/:id', (req, res) => {
-    const notes = JSON.parse(db)
 
     //Remove the note with given id
-    notes = notes.filter((note) => note.id !== req.params.id);
+    notes = db.filter((note) => note.id != req.params.id);
 
     //Refresh note id after deleting
     refreshID(notes);
@@ -61,8 +59,8 @@ module.exports = function(app) {
 	});
 };
 
-function refreshID(arr) {
-  arr.forEach((item, index) => {
-    item.id = index;
+function refreshID(notes) {
+  notes.forEach((note, index) => {
+    note["id"] = (index + 1).toString();
   })
 }
