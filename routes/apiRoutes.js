@@ -13,56 +13,46 @@ DELETE /api/notes/:id - Should receive a query parameter containing the id of a 
 const fs = require('fs');
 const db = require('../db/db.json')
 
-let notes = JSON.parse(db)
-
-// GET NOTES FOR API RESPONSE ================================================================================
-
-// let notes = readNotes()
-
-// function readNotes() {
-//   //use fs readFile to turn db.json 
-//   let data = fs.readFileSync("./db/db.json", "utf8") 
-
-//   console.log('unparsed data: ',data);
-//   //parse returned json file
-//   return JSON.parse(data);
-// }
-
-
 //SET UP API ROUTES AND EXPORT THE MODULE ================================================================================
 
 module.exports = function(app) {
-  
-  console.log('notesData: ', notes);
+
+  console.log("json database: ", db);
 
 	//API GET request
-  app.get('/api/notes', function (req, res) {
+  app.get('/api/notes', function(req, res) {
+    const notes = JSON.parse(db)
     res.json(notes)
   })
-		
-
 
 	//API POST request
   app.post("/api/notes", (req, res) => {
+    const notes = JSON.parse(db)
     //Set the newNote obj from user input
     const newNote = {
       title: req.body.title,
       text: req.body.text,
-      id: (notes.length + 1).toString()
+      id: (data.length + 1).toString()
     }
-      
-      //add new note to notes data
-      notes.push(newNote);
-    
-      //Write the updated notes to db.json
-      fs.writeFileSync("./db/db.json", JSON.stringify(notes, null, '\t')); 
+    //add new note to notes data
+    notes.push(newNote);
+  
+    //Write the updated notes to db.json
+    fs.writeFileSync("./db/db.json", JSON.stringify(notes, null, '\t')); 
+
+    //Return newNote to user
+    res.json(newNote)
   })
 			
 	//API DELETE request
 	app.delete('/api/notes/:id', (req, res) => {
-	
+    const notes = JSON.parse(db)
+
     //Remove the note with given id
     notes = notes.filter((note) => note.id !== req.params.id);
+
+    //Refresh note id after deleting
+    refreshID(notes);
 
     //Write the updated notes to db.json
     fs.writeFileSync("./db/db.json", JSON.stringify(notes, null, '\t'))
@@ -70,3 +60,9 @@ module.exports = function(app) {
     res.json("Selected note deleted")
 	});
 };
+
+function refreshID(arr) {
+  arr.forEach((item, index) => {
+    item.id = index;
+  })
+}
