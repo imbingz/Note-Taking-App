@@ -12,21 +12,41 @@ DELETE /api/notes/:id - Should receive a query parameter containing the id of a 
 
 const fs = require('fs');
 
-const db = require('../db/db.json');
+
+// GET NOTES FOR API RESPONSE ================================================================================
+
+const filePath = "./db/db.json";
+
+let notes = getNotes()
+
+function getNotes() {
+  //use fs readFile to turn db.json 
+  let data = fs.readFileSync(filePath, "utf8") 
+  //parse returned json file
+  let notesData = JSON.parse(data);
+  //set id prop for each note obj
+  notesData.forEach((note, index) => {
+    note['id'] = index + 1
+  })
+
+  return notesData;
+}
+
+
 
 //SET UP API ROUTES AND EXPORT THE MODULE ================================================================================
-console.log("line 18 db:", db);
+console.log('notesData: ', notes);
 
 module.exports = function(app) {
 	//API GET request
 	app.get('/api/notes', (req, res) => {
-		res.json(db);
+		
 	});
 
 	//API POST request
 	app.post('/api/notes', (req, res) => {
 		//Read json data file
-		fs.readFile('./db/db.json', 'utf-8', (err, data) => {
+		fs.readFile(filePath, 'utf-8', (err, data) => {
 			if (err) throw err;
 
 			const notes = JSON.parse(data);
@@ -36,42 +56,42 @@ module.exports = function(app) {
 				req.body['id'] = notes.length + 1;
 				//Add new note to parsed data
 				notes.push(req.body);
-      } else {
-        console.log("Enter note title and text before saving the new note.");
-      }
+			} else {
+				console.log('Enter note title and text before saving the new note.');
+			}
 
-      console.log("line 40 req.body:", req.body);
+			console.log('line 40 req.body:', req.body);
 
 			//Write the updated notes to db.json
-			fs.writeFile('./db/db.json', JSON.stringify(notes, null, '\t'), (err) => {
+			fs.writeFile(filePath, JSON.stringify(notes, null, '\t'), (err) => {
 				if (err) throw err;
 
 				//Send all notes to client
-        res.json(db);
-        console.log("New note saved!");
+				res.json(db);
+				console.log('New note saved!');
 			});
 		});
 	});
 
 	//API DELETE request
-	app.delete("/api/notes/:id", (req, res) => {
+	app.delete('/api/notes/:id', (req, res) => {
 		//Read json data file
-    fs.readFile("./db/db.json", 'utf-8', (err, data) => {
+		fs.readFile(filePath, 'utf-8', (err, data) => {
 			if (err) throw err;
 
 			//Parse json data
 			const notes = JSON.parse(data);
 
-      console.log(req.params.id);
+			console.log(req.params.id);
 
 			//Remove the note with given id
-			notes = notes.filter(note => note.id !== req.params.id);
+			notes = notes.filter((note) => note.id !== req.params.id);
 
 			//Write the updated notes to db.json
-			fs.writeFile("./db/db.json", JSON.stringify(notes, null, '\t'), (err) => {
-        if (err) throw err;
-        res.json(db)
-        console.log("Selected note deleted");
+			fs.writeFile(filePath, JSON.stringify(notes, null, '\t'), (err) => {
+				if (err) throw err;
+				res.json(db);
+				console.log('Selected note deleted');
 			});
 		});
 	});
