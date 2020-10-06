@@ -40,7 +40,7 @@ console.log('notesData: ', notes);
 module.exports = function(app) {
 	//API GET request
 	app.get('/api/notes', (req, res) => {
-		
+		res.json(notes)
 	});
 
 	//API POST request
