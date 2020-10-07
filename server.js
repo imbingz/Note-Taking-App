@@ -1,27 +1,28 @@
-//The application should have a db.json file on the backend that will be used to store and retrieve notes using the fs module.
+// The application should have a db.json file on the backend that will be used to store and retrieve notes using the fs module.
 
-
-// IMPORT MODULES AND FILES ================================================================================
+// IMPORT MODULES ================================================================================
 
 const express = require('express');
-const fs = require('fs');
-const path = require('path');
 
 const app = express(); 
-
-// require("./routes/htmlRoutes")(app);
-// require("./routes/apiRoutes")(app);
 
 
 // SET AN INITIAL PORT ======================================================================================
 
-let PORT = process.env.PORT || 8080;
+let PORT = process.env.PORT || 8000;
 
-// SET UP MIDDLEWARES TO HANDLE DATA PARSIING ======================================================================================
+// SET UP TO HANDLE DATA PARSING AND STATIC FILES ======================================================================================
 
 app.use(express.urlencoded({ extended: true }));
 app.use(express.json()); 
-app.use(express.static('public'))
+// app.use(express.static('public'))
+app.use( express.static( __dirname + '/public' ));
+
+
+// IMPORT ROUTES ================================================================================
+
+require("./routes/apiRoutes")(app);
+require("./routes/htmlRoutes")(app);
 
 
 // SET UP LISTEN EVENT ON THE SERVER ======================================================================================
