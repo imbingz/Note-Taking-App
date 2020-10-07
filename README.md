@@ -23,11 +23,11 @@
   #
 
   ##  Project Links
-  https://github.com/imbingz/Github-Readme-Template<br>
-  https://youtu.be/fjT4mdEXFC4
+  https://enigmatic-hamlet-36713.herokuapp.com/<br>
+
 
   ## Screenshots-Demo
-  <kbd>![screenshot-demo1](./assets/images/cli-readme.gif)</kbd>
+  <kbd>![screenshot-demo1](./public/assets/images/demo.gif)</kbd>
   
   ## Project Objective
   To create an application that can be used to write, save, and delete notes for users that need to keep track of a lot of information because it's easy to forget or be unable to recall something important. Being able to take persistent notes allows users to have written information available when needed. This application uses an express.js backend and save and retrieve note data from a JSON file.
@@ -47,6 +47,7 @@
 
   ## Usage 
   In order to use this APP, you need terminal (mac: pre-installed) or gitbash (pc: must be installed). You also need to download and install [node.js](https://nodejs.org/en/) and [npm](www.npmjs.com) or [yarn](https://yarnpkg.com/) package manager. Open the cloned REPO in your favorite code editor, and then in terminal, enter the command “ npm install“ to install the dependencies "express" and "nodemon". Now you are ready to start using  the app by entering “node server.js” or "npm start" or "nodemon server.js" or "npm run watch" on your terminal or gitbash. 
+  To try the app, click [here](https://enigmatic-hamlet-36713.herokuapp.com/)
   
   ## Credits and Reference
   The following links have helped me with this project. <br> [Heroku](https://heroku.com), [npm Express Package](https://www.npmjs.com/package/express), [how-to-build-a-restful-node-js-api-server-using-json-files](https://robkendal.co.uk/blog/how-to-build-a-restful-node-js-api-server-using-json-files)
