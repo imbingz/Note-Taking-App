@@ -2,8 +2,8 @@
 
  
   [![github-follow](https://img.shields.io/github/followers/imbingz?label=Follow&logoColor=purple&style=social)](https://github.com/imbingz)
-  [![project-languages-used](https://img.shields.io/github/languages/count/imbingz/Github-Readme-Template?color=important)](https://github.com/imbingz/Note-Taking-App)
-  [![project-top-language](https://img.shields.io/github/languages/top/imbingz/Github-Readme-Template?color=blueviolet)](https://github.com/imbingz/Note-Taking-App)
+  [![project-languages-used](https://img.shields.io/github/languages/count/imbingz/Note-Taking-App?color=important)](https://github.com/imbingz/Note-Taking-App)
+  [![project-top-language](https://img.shields.io/github/languages/top/imbingz/Note-Taking-App?color=blueviolet)](https://github.com/imbingz/Note-Taking-App)
   [![license](https://img.shields.io/badge/License-MIT-brightgreen.svg)](https://choosealicense.com/licenses/mit/)
   [![node.js](https://img.shields.io/node/v/c?color=pink)](https://nodejs.org/en/)
   [![npm](https://img.shields.io/npm/v/npm?color=blue&logo=npm)](https://www.npmjs.com/package/inquirer)
