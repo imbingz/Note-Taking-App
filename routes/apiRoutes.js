@@ -11,27 +11,29 @@ DELETE /api/notes/:id - Should receive a query parameter containing the id of a 
 // IMPORT MODULES AND FILES ================================================================================
 
 const fs = require('fs');
-const db = require('../db/db.json')
+
 
 //SET UP API ROUTES AND EXPORT THE MODULE ================================================================================
 
-module.exports = function(app) {
+function data() {
+  return JSON.parse(fs.readFileSync("./db/db.json", "utf8"))
+}
 
-  console.log("json database: ", db);
+module.exports = function(app) {
 
 	//API GET request
   app.get('/api/notes', function(req, res) {
-    res.json(db)
+    res.json(data())
   })
 
 	//API POST request
   app.post("/api/notes", (req, res) => {
-    
+    let db = data();
     //Set the newNote obj from user input
     const newNote = {
       title: req.body.title,
       text: req.body.text,
-      id: (db.length + 1).toString()
+      id: Date.now() + ""
     }
     //add new note to notes data
     db.push(newNote);
@@ -45,22 +47,14 @@ module.exports = function(app) {
 			
 	//API DELETE request
 	app.delete('/api/notes/:id', (req, res) => {
-
+    let db = data();
     //Remove the note with given id
-    notes = db.filter((note) => note.id != req.params.id);
-
-    //Refresh note id after deleting
-    refreshID(notes);
+    db = db.filter((note) => note.id != req.params.id);
 
     //Write the updated notes to db.json
-    fs.writeFileSync("./db/db.json", JSON.stringify(notes, null, '\t'))
+    fs.writeFileSync("./db/db.json", JSON.stringify(db, null, '\t'))
 
-    res.json("Selected note deleted")
+    res.json(db)
 	});
 };
 
-function refreshID(notes) {
-  notes.forEach((note, index) => {
-    note["id"] = (index + 1).toString();
-  })
-}
