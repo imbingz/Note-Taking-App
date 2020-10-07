@@ -1,5 +1,3 @@
-// The application should have a db.json file on the backend that will be used to store and retrieve notes using the fs module.
-
 // IMPORT MODULES ================================================================================
 
 const express = require('express');
@@ -18,7 +16,7 @@ app.use(express.json());
 app.use( express.static( __dirname + '/public' ));
 
 
-// IMPORT ROUTES ================================================================================
+// IMPORT ROUTES - ORDER IS IMPORTANT ================================================================================
 
 require("./routes/apiRoutes")(app);
 require("./routes/htmlRoutes")(app);
