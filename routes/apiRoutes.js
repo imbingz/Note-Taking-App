@@ -12,12 +12,12 @@ function data() {
 
 module.exports = function(app) {
 
-	//API GET request
+  //API GET request
   app.get('/api/notes', function(req, res) {
     res.json(data())
   })
 
-	//API POST request
+  //API POST request
   app.post("/api/notes", (req, res) => {
     let db = data();
     //Set the newNote obj from user input
@@ -36,16 +36,16 @@ module.exports = function(app) {
     res.json(newNote)
   })
 			
-	//API DELETE request
-	app.delete('/api/notes/:id', (req, res) => {
-    let db = data();
-    //Remove the note with given id
-    db = db.filter((note) => note.id !== req.params.id);
+   //API DELETE request
+  app.delete('/api/notes/:id', (req, res) => {
+  let db = data();
+  //Remove the note with given id
+  db = db.filter((note) => note.id !== req.params.id);
 
-    //Write the updated notes to db.json
-    fs.writeFileSync("./db/db.json", JSON.stringify(db, null, '\t'))
+  //Write the updated notes to db.json
+  fs.writeFileSync("./db/db.json", JSON.stringify(db, null, '\t'))
 
-    res.json(db)
-	});
+  res.json(db)
+  });
 };
 
