@@ -7,10 +7,6 @@ const db = require('../db/db.json')
 
 //SET UP API ROUTES AND EXPORT THE MODULE ================================================================================
 
-// function data() {
-//   return JSON.parse(fs.readFileSync("./db/db.json", "utf8"))
-// }
-
 module.exports = function(app) {
 
 	//API GET request
@@ -21,13 +17,7 @@ module.exports = function(app) {
 
 	//API POST request
   app.post("/api/notes", (req, res) => {
-    // let db = data();
-    //Set the newNote obj from user input
-    // const newNote = {
-    //   title: req.body.title,
-    //   text: req.body.text,
-    //   id: Date.now() + ""
-    // }
+   
     //add new note to notes data
     db.push(req.body);
   
@@ -40,9 +30,8 @@ module.exports = function(app) {
 			
 	//API DELETE request
 	app.delete('/api/notes/:id', (req, res) => {
-    // let db = data();
+   
     //Remove the note with given id
-    // db = db.filter((note) => note.id !== req.params.id);
     db.splice(req.params.id, 1)
 
     //Write the updated notes to db.json
