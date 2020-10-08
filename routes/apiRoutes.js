@@ -10,7 +10,7 @@ const db = require('../db/db.json')
 module.exports = function(app) {
 
   //API GET request
-  app.get('/api/notes', function(req, res) {
+  app.get('/api/notes', (req, res) => {
     //add id to each note when sending response 
     res.json(db.map((note, i) => ({...note, id: i + ""})))
   })
