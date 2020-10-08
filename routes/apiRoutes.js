@@ -28,17 +28,17 @@ module.exports = function(app) {
     res.json(req.body)
   })
 			
-	//API DELETE request
-	app.delete('/api/notes/:id', (req, res) => {
-   
+  //API DELETE request
+  app.delete('/api/notes/:id', (req, res) => {
+
     //Remove the note with given id
     db.splice(req.params.id, 1)
 
-  //Write the updated notes to db.json
-  fs.writeFileSync("./db/db.json", JSON.stringify(db, null, '\t'))
+    //Write the updated notes to db.json
+    fs.writeFileSync("./db/db.json", JSON.stringify(db, null, '\t'))
 
     //send response back without body
     res.status(200).end();
-	});
+  });
 };
 
