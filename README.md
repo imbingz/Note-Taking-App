@@ -1,4 +1,5 @@
 # Note-Taking-App
+<hr>
 
  
   [![github-follow](https://img.shields.io/github/followers/imbingz?label=Follow&logoColor=purple&style=social)](https://github.com/imbingz)
