@@ -9,13 +9,13 @@ const db = require('../db/db.json')
 
 module.exports = function(app) {
 
-	//API GET request
+  //API GET request
   app.get('/api/notes', function(req, res) {
     //add id to each note when sending response 
     res.json(db.map((note, i) => ({...note, id: i + ""})))
   })
 
-	//API POST request
+  //API POST request
   app.post("/api/notes", (req, res) => {
    
     //add new note to notes data
@@ -34,8 +34,8 @@ module.exports = function(app) {
     //Remove the note with given id
     db.splice(req.params.id, 1)
 
-    //Write the updated notes to db.json
-    fs.writeFileSync("./db/db.json", JSON.stringify(db, null, '\t'))
+  //Write the updated notes to db.json
+  fs.writeFileSync("./db/db.json", JSON.stringify(db, null, '\t'))
 
     //send response back without body
     res.status(200).end();
